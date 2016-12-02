@@ -1,0 +1,37 @@
+<% include _header %>
+<!--courseName: String,-->
+<!--courseNumber: String,-->
+<!--professor: String,-->
+<!--credits: Number,-->
+<!--time: {-->
+<!--year: String,-->
+<!--semester: String,-->
+<!--when: [Date],-->
+<!--},-->
+<!--section: String,-->
+<!--preq: [{type: mongoose.Schema.Types.ObjectId, ref: 'Course'}],-->
+<!--description: String,-->
+<!--registeredStudent: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]-->
+<% if(courses) { %>
+
+    <% courses.forEach(function(course) { %>
+
+        <%=course.courseNumber %> <%= course.courseName %><br>
+        professor: <%= course.professor %> <br>
+        credits: <%= course.credits %> <br>
+        description: <%= course.description %> <br>
+        year: <%= course.time.year %> <br>
+        semester: <%= course.time.semester %> <br>
+        time: <%= course.time.when %> <br>
+        section: <%= course.section %> <br>
+        prerequisite: <%= course.preq %> <br>
+        alreadyRegistered: <%= course.registeredStudent.length %> <br>
+        <hr>
+
+    <%  })  %>
+
+
+<% } %>
+<% include _footer %>
+
+

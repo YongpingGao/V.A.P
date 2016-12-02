@@ -1,0 +1,24 @@
+<% include _header %>
+
+<section>
+    <div class="container">
+
+        <h2>Profile</h2>
+
+        <% if (user) { %>
+
+        <h4>User Name: <%= user.username %></h4>
+        <h4>Concordia ID: <%= user.concordiaID %></h4>
+        <h4>Email: <%= user.email %></h4>
+        <h4>Major in: <%= user.major %></h4>
+        <h4>Role: <%= user.role %></h4>
+        <h4>Created at: <%= user.createdAt %></h4>
+
+        <% } %>
+
+    </div>
+</section>
+
+
+
+<% include _footer %>

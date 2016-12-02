@@ -1,0 +1,161 @@
+<% include _header %>
+<link rel="stylesheet" type="text/css" href="../css/schedule.css" />
+<link rel='stylesheet' type='text/css' href='../css/smoothness/jquery-ui-1.8.11.custom.css' />
+<link rel='stylesheet' type='text/css' href='../css/jquery.weekcalendar.css' />
+<link rel="stylesheet" type="text/css" href="../css/default.css" />
+
+
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#list" data-toggle="tab">List View</a></li>
+    <li><a href="#week" data-toggle="tab">Weekly View</a></li>
+</ul>
+<br>
+<div class="tab-content">
+    <% if(courses) { %>
+    <div id="list" class="tab-pane fade in active">
+
+        <form action="/student/drop" method="post">
+            <% courses.forEach(function(course) { %>
+
+            <%=course.courseNumber %> <%= course.courseName %><br>
+            professor: <%= course.professor %> <br>
+            credits: <%= course.credits %> <br>
+            description: <%= course.description %> <br>
+            year: <%= course.time.year %> <br>
+            semester: <%= course.time.semester %> <br>
+            time: <%= course.time.when %> <br>
+            section: <%= course.section %> <br>
+            prerequisite: <%= course.preq %> <br>
+            alreadyRegistered: <%= course.registeredStudent.length %> <br>
+            <br>
+            <button type="submit" class="btn btn-success" name="drop" value=<%= course._id %>>Drop</button>
+            <hr>
+            <%  })  %>
+        </form>
+
+    </div>
+    <div id="week" class="tab-pane fade">
+        <div class="clearer"></div>
+        <div id="calendar"></div>
+    </div>
+    <% } %>
+</div>
+
+
+
+
+<script type='text/javascript'>
+
+
+    var year = 2017;
+    var month = 0;
+
+
+    var courses = [];
+    var events = [];
+    var weeksMap = {
+        'Monday': 9,
+        'Tuesday': 10,
+        'Wednesday': 11,
+        'Thursday': 12,
+        'Friday': 13,
+        'Saturday': 14,
+        'Sunday': 15
+    }
+
+    var rawCoursesData = <%- JSON.stringify(courses) %>;
+    rawCoursesData.forEach(function(course) {
+
+        var times = course.time.when;
+        times.forEach(function (time) {
+            var vals = time.split(' ');
+            var day = weeksMap[vals[0]];
+            var startTimeHour = vals[1].split(':')[0]; //8
+            var startTimeMin= vals[1].split(':')[1].slice(0,2); //45
+            if(vals[1].indexOf("PM") != -1) { // PM
+                startTimeHour = parseInt(startTimeHour) + 12;
+            }
+            var endTimeHour = vals[3].split(':')[0]; // 10
+            var endTimeMin= vals[3].split(':')[1].slice(0,2); //00
+            if(vals[3].indexOf("PM") != -1) { // PM
+                endTimeHour = parseInt(endTimeHour) + 12;
+            }
+            var event = {
+                'start': new Date(year, month, day, startTimeHour, startTimeMin),
+                'end': new Date(year, month, day, endTimeHour, endTimeMin),
+                'title': course.courseNumber + "</br>"+ course.courseName
+            }
+            events.push(event);
+            console.log(endTimeHour);
+            console.log(startTimeHour);
+            console.log(course.courseNumber);
+        });
+
+    })
+
+
+
+
+
+    var eventData1 = {
+        options: {
+            timeslotsPerHour: 4,
+            timeslotHeight: 20
+        },
+//        events : [
+//
+//
+//            { 'start': new Date(year, month, day, 12, 20), 'end': new Date(year, month, day, 13, 30),'title':''},
+//            { 'start': new Date(year, month, day, 14), 'end': new Date(year, month, day, 14, 45),'title':'Dev Meeting'},
+//            {  'start': new Date(year, month, day + 1, 18), 'end': new Date(year, month, day + 1, 18, 45),'title':'Hair cut'},
+//            {  'start': new Date(year, month, day - 1, 8), 'end': new Date(year, month, day - 1, 9, 30),'title':'Team breakfast'},
+//            {  'start': new Date(year, month, day + 1, 14), 'end': new Date(year, month, day + 1, 15),'title':'Product showcase'}
+//
+//        ]
+        events: events
+    };
+
+//    var eventData2 = {
+//        options: {
+//            timeslotsPerHour: 3,
+//            timeslotHeight: 30
+//        },
+//        events : [
+//            {'id':1, 'start': new Date(year, month, day, 12), 'end': new Date(year, month, day, 13, 00),'title':'Lunch with Sarah'},
+//            {'id':2, 'start': new Date(year, month, day, 14), 'end': new Date(year, month, day, 14, 40),'title':'Team Meeting'},
+//            {'id':3, 'start': new Date(year, month, day + 1, 18), 'end': new Date(year, month, day + 1, 18, 40),'title':'Meet with Joe'},
+//            {'id':4, 'start': new Date(year, month, day - 1, 8), 'end': new Date(year, month, day - 1, 9, 20),'title':'Coffee with Alison'},
+//            {'id':5, 'start': new Date(year, month, day + 1, 14), 'end': new Date(year, month, day + 1, 15),'title':'Product showcase'}
+//        ]
+//    };
+
+    $(document).ready(function() {
+        var $calendar = $('#calendar').weekCalendar({
+            timeslotsPerHour: 4,
+            scrollToHourMillis : 0,
+            height: function($calendar){
+                return $(window).height() - $('h1').outerHeight(true);
+            },
+            data: function(start, end, callback) {
+                var dataSource = $('#data_source').val();
+                callback(eventData1);
+            }
+        });
+        $calendar.click(false);
+    });
+</script>
+
+
+<script type='text/javascript' src='../js/jquery-1.4.4.min.js'></script>
+<script type='text/javascript' src='../js/jquery-ui-1.8.11.custom.min.js'></script>
+<script type="text/javascript" src="../js/date.js"></script>
+<script type='text/javascript' src='../js/jquery.weekcalendar.js'></script>
+
+
+
+
+
+<% include _footer %>
+
+

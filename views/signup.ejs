@@ -1,0 +1,36 @@
+<% include _header %>
+<h1> Sign Up</h1>
+
+<!-- show any messages that come back with authentication -->
+<% if (message.length > 0) { %>
+<div class="alert alert-danger"><%= message %></div>
+<% } %>
+
+<form action="/signup" method="post">
+    <div class="form-group">
+        <input  name="email"  type="email" class="form-control" placeholder="Email"  required>
+    </div>
+    <div class="form-group">
+        <input  name="username"  type="text" class="form-control" placeholder="Username"  required>
+    </div>
+    <div class="form-group">
+        <input  name="password" type="password" class="form-control" placeholder="Password" required>
+    </div>
+
+    <div class="form-group">
+        Major:
+        <input type="radio" name="major" value="SE" checked> Software Engineering<br>
+        <input type="radio" name="major" value="CS"> Computer Science
+    </div>
+
+    <div class="form-group">
+        Role:
+        <input type="radio" name="role" value="Student" checked> Student
+        <input type="radio" name="role" value="Professor"> Professor
+        <input type="radio" name="role" value="Administrator"> Administrator
+    </div>
+    <button type="submit" class="btn btn-success btn-block full-width m-b">Sign Up</button>
+
+</form>
+
+<% include _footer %>

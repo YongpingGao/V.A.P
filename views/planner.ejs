@@ -1,0 +1,107 @@
+<% include _header %>
+
+
+
+<h2> Sequence Planner </h2>
+
+<h3> Please choose your preference </h3>
+<h4> Drag panels to set the priority of your preference </h4>
+<hr>
+<form action="/student/planner" method="post">
+    <input type="hidden" name="order">
+
+    <div>
+        <div class="panel panel-primary">
+            <div class="panel-heading"> Prefer Quantity of Courses per semester </div>
+            <div class="panel-body">
+                <label><input type="number" class="form-control" name="quantity"></label>
+            </div>
+
+        </div>
+    </div>
+<ul id="sortable" style="padding-left:0px">
+    <div id="1">
+        <div class="panel panel-primary">
+            <div class="panel-heading"> Prefer time slot </div>
+            <div class="panel-body">
+            <div class="checkbox">
+                <label><input type="checkbox" name="time" value="Morning">Morning (8:00am to 12:00pm)</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="time" value="Afternoon">Afternoon (12:01pm to 5:00pm)</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="time" value="Evening">Evening (5:01pm to 11:00pm)</label>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div id="2">
+        <div class="panel panel-primary">
+            <div class="panel-heading"> Prefer day </div>
+            <div class="panel-body">
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Monday">Monday</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Tuesday">Tuesday</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Wednesday">Wednesday</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Thursday">Thursday</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Friday">Friday</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Saturday">Saturday</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" value="Sunday">Sunday</label>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div id="3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">  Prefer Professor </div>
+            <div class="panel-body">
+                <% profs.forEach(function (prof) { %>
+                <% if(prof){ %>
+
+                <div class="checkbox">
+                    <label><input type="checkbox" name="professor" value=<%= prof %>><%= prof %></label>
+                </div>
+                <% } %>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-success btn-block">Generate Schedule</button>
+
+
+</ul>
+</div>
+</form>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $( function() {
+        $('#sortable').sortable({
+            update: function(event, ui) {
+                var order = $(this).sortable('toArray').toString();
+                $('input[name="order"]').val(order);
+            }
+        });
+
+
+    } );
+</script>
+
+
+<% include _footer %>

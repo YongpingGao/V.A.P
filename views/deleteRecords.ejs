@@ -1,0 +1,16 @@
+<% include _header %>
+
+<% if(records) { %>
+<form action="/admin/deleteRecords" method="post">
+    <% records.forEach(function(record) { %>
+    <input type="checkbox" name= "record" value=<%=record._id %>>
+    ConcordiaID: <%= record.concordiaID %> | <%= record.year %>  <%= record.semester %> | <%= record.courseNumber %> |  grade: <%= record.grade %><br>
+    <%  })  %>
+    <br>
+    <button type="submit" class="btn btn-alert ">Delete</button>
+</form>
+
+<% } %>
+<% include _footer %>
+
+

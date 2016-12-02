@@ -1,0 +1,30 @@
+<% include _header %>
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Major</th>
+            <th>Required Credits</th>
+            <th>Credits Earned</th>
+            <th>Credits Left</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <tr>
+            <td><%= major %></td>
+            <td><%= creditsAll %></td>
+            <td><%= creditsNow %></td>
+            <td><%= creditsLeft %></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<% include _footer %>
+

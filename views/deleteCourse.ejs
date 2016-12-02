@@ -1,0 +1,14 @@
+<% include _header %>
+
+<% if(courses) { %>
+    <form action="/admin/deleteCourse" method="post">
+    <% courses.forEach(function(course) { %>
+        <input type="checkbox" name= "record" value=<%=course._id %>> <%= course.courseNumber %> <%= course.courseName %>  ; Section: <%= course.section %><br>
+    <%  })  %>
+        <button type="submit" class="btn btn-alert ">Delete</button>
+    </form>
+
+<% } %>
+<% include _footer %>
+
+

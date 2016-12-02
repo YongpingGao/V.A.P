@@ -1,0 +1,29 @@
+<% include _header %>
+
+
+
+<h2>Schedule</h2>
+
+<% if(courses) { %>
+<form action="/student/register" method="post">
+<h3><%= courses.length%> Courses available for you</h3>
+<% courses.forEach(function(course) { %>
+<hr>
+<%=course.courseNumber %> <%= course.courseName %><br>
+professor: <%= course.professor %> <br>
+credits: <%= course.credits %> <br>
+description: <%= course.description %> <br>
+year: <%= course.time.year %> <br>
+semester: <%= course.time.semester %> <br>
+time: <%= course.time.when %> <br>
+section: <%= course.section %> <br>
+prerequisite: <%= course.preq %> <br>
+alreadyRegistered: <%= course.registeredStudent.length %> <br>
+    <div class="checkbox">
+        <label><input type="checkbox" name="course" value=<%= course._id %>>Register this course</label>
+    </div>
+<%  })  %>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+<% } %>
+<% include _footer %>

@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"vap.users"},{"v":1,"unique":true,"key":{"concordiaID":1},"name":"concordiaID_1","ns":"vap.users","background":true}]}

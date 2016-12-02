@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>V.A.P</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class='navbar navbar-default navbar-static-top' role='navigation'>
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">V.A.P</a>
+        </div>
+        <% if (currentUser){ %>
+        <ul class="nav navbar-nav navbar-left">
+        <% if(currentUser.role == "Student") {%>
+            <li>
+                <a href="/course/all">Browse Courses</a>
+            </li>
+            <li>
+                <a href="/student/schedule">My Course schedule</a>
+            </li>
+            <li>
+                <a href="/student/records">My academic record</a>
+            </li>
+            <li>
+                <a href="/student/requirement">Program requirement</a>
+            </li>
+            <li>
+                <a href="/student/planner">Sequence planner</a>
+            </li>
+        <% } else if(currentUser.role  == "Professor") { %>
+            <li>
+                <a href="/course/all">Browse Courses</a>
+            </li>
+        <% } else { %>
+            <li>
+                <a href="/course/all">Browse Courses</a>
+            </li>
+            <li>
+                <a href="/admin/addCourse">Add Course</a>
+            </li>
+            <li>
+                <a href="/admin/deleteCourse">Delete Course</a>
+            </li>
+            <li>
+                <a href="/admin/addRecords">Add Student Records</a>
+            </li>
+            <li>
+                <a href="/admin/deleteRecords">Delete Student Records</a>
+            </li>
+
+
+        <% } %>
+
+
+        </ul>
+        <% } %>
+
+        <ul class="nav navbar-nav navbar-right">
+            <% if (currentUser){ %>
+            <li>
+                <a href="/profile">
+                    Hello, <%= currentUser.username %>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    Log Out
+                </a>
+            </li>
+            <% } else { %>
+                <li><a href="/login">Log in</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<div class="container">
+
+    <% if(errors) { %>
+    <% errors.forEach(function(error){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% })%>
+    <% } %>
+    <% if(infos) { %>
+    <% infos.forEach(function(info) { %>
+        <div class="alert alert-info" role="alert">
+            <%= info %>
+        </div>
+    <%})%>
+    <% } %>

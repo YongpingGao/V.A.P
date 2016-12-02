@@ -1,0 +1,27 @@
+<% include _header %>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Year</th>
+            <th>Semester</th>
+            <th>Course</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% records.forEach(function(record) { %>
+        <tr>
+            <td><%= record.year %></td>
+            <td><%= record.semester %></td>
+            <td><%= record.courseNumber %></td>
+            <td><%= record.grade %></td>
+        <% }); %>
+
+        </tbody>
+    </table>
+</div>
+
+<% include _footer %>
